@@ -4,5 +4,5 @@ var fn_signin = async (ctx, next) => {
 }
 
 module.exports = {
-  'GET /signin': fn_signin
+  'POST /signin': fn_signin
 }

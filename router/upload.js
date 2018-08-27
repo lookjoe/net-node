@@ -13,7 +13,8 @@ var fn_upload = async (ctx, next) => {
   	reader.pipe(upStream)
     filePaths.push(filePath)
   }
-  ctx.response.body = filePaths
+  const mag = { "msg": "成功" }
+  ctx.response.body = mag
 }
 
 module.exports = {
