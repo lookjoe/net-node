@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 
 function addMapping (router, mapping) {
   for (let url in mapping) {
@@ -26,8 +27,13 @@ function addControllers (router, dir) {
 }
 
 module.exports = function (dir) {
-    let controllers_dir = dir || './router', // 如果不传参数，扫描目录默认为'controllers'
-        router = require('koa-router')()
+    let controllers_dir = ''
+    if (dir) {
+      controllers_dir = path.join(__dirname, `${dir}`)
+    } else {
+      controllers_dir = path.join(__dirname, `../router`) // 如果不传参数，扫描目录默认为'router'
+    }
+    let router = require('koa-router')()
     addControllers(router, controllers_dir)
     return router.routes()
 }

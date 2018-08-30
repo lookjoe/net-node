@@ -1,5 +1,4 @@
 var fn_login = async (ctx, next) => {
-  console.log('body', ctx.request.body)
   let name = ctx.request.body.name || ''
   let password = ctx.request.body.password || ''
   if (name === 'joe' && password === '123456') {
