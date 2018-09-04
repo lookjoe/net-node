@@ -1,5 +1,10 @@
 const Sequelize = require('sequelize')
 const config = require('./config')
+const uuid = require('node-uuid')
+
+function generateId () {
+  return uuid.v4()
+}
 
 var sequelize = new Sequelize(config.database, config.username, config.password, {
   host: config.host,
@@ -11,7 +16,7 @@ var sequelize = new Sequelize(config.database, config.username, config.password,
   }
 })
 
-const ID_TYPE = Sequelize.STRING(50)
+const ID_TYPE = Sequelize.INTEGER(50)
 
 function defineModel (name, attributes) {
   var attrs = {}
@@ -27,8 +32,16 @@ function defineModel (name, attributes) {
       }
     }
   }
-  attrs.ID = {
+  // 唯一标识符id
+  // attrs.ID = {
+  //   type: ID_TYPE,
+  //   primaryKey: true,
+  //   autoIncrement: true
+  // }
+  attrs.id = {
     type: ID_TYPE,
+    // 自增id
+    autoIncrement: true,
     primaryKey: true
   }
   attrs.createdAt = {
@@ -50,6 +63,10 @@ function defineModel (name, attributes) {
       beforeValidate: function (obj) {
         let now = Date.now()
         if (obj.isNewRecord) {
+          // if (!obj.ID) {
+          //   obj.ID = generateId()
+          // }
+          // console.log('obj.id', obj.ID)
           obj.createdAt = now
           obj.updateAt = now
           obj.version = 0
@@ -81,5 +98,6 @@ for (let type of TYPES) {
 }
 
 exp.ID = ID_TYPE
+exp.generateId = generateId
 
 module.exports = exp
