@@ -1,7 +1,7 @@
 var config = {
   database: 'net',
   username: 'root',
-  password: '123456',
+  password: '',
   host: 'localhost',
   prot: 3306
 }
